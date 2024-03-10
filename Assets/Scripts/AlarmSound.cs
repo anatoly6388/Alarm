@@ -9,24 +9,16 @@ public class AlarmSound : MonoBehaviour
     private float _currentVolume = 0f;
     private float _volumeRate = 0.2f;
     
-    public void OnAlarm()
+    public void OnAlarm(float targetVolume)
     {
-        float targetVolume = 1f;
         StopAllCoroutines();
-        var wait = new WaitForSeconds(_delayVolume);
-        StartCoroutine (Alarm(wait, targetVolume));
+        StartCoroutine (Alarm(targetVolume));
     }
 
-    public void OffAlarm()
+    private IEnumerator Alarm(float targetVolume)
     {
-        float targetVolume = 0f;
-        StopAllCoroutines();
         var wait = new WaitForSeconds(_delayVolume);
-        StartCoroutine(Alarm(wait, targetVolume));
-    }
 
-    private IEnumerator Alarm(WaitForSeconds wait,  float targetVolume)
-    {
         while (true)
         {          
             _currentVolume = Mathf.MoveTowards(_currentVolume, targetVolume, _volumeRate);
